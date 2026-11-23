@@ -23,13 +23,23 @@ O **Solaris** resolve esses desafios por meio de uma aplicação web responsiva 
 ## 2. Estrutura do Repositório
 
 .
+
 ├── README.md                 # Documentação técnica completa da arquitetura, HA e observabilidade
+
 ├── frontend/                 # Camada 1: Aplicação web responsiva (6 páginas) + Dockerfile
+
 ├── backend/                  # Camada 2: Microsserviços + Dockerfiles + testes
+
 │   ├── core-time-service/    # Anéis diários, calendário e estatísticas de tempo/projetos
+
 │   ├── comms-notes-service/  # Chat, e-mail e notebook/sketchbook
+
 │   └── gateway-or-auth/      # Roteamento / autenticação 
+
 ├── banco_dados/                 # Camada 3: Schemas, scripts SQL/NoSQL
+
 └── registro/
-    ├── logs/                 # Registros de logs e eventos reais da aplicação em execução
-    └── monitoring/           # Prints de dashboards reais (Grafana / Prometheus)
+    
+  ├── logs/                 # Registros de logs e eventos reais da aplicação em execução
+  
+  └── monitoring/           # Prints
