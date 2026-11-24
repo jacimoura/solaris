@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaris — Comunicações</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#0c0505] text-[#ebd6bf] font-sans min-h-screen flex flex-col">
+  <header class="h-14 bg-[#170c0c] border-b border-[#ebd6bf]/15 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <button type="button" onclick="toggleSidebarMobile()" class="lg:hidden p-1.5 rounded hover:bg-[#0c0505] text-[#ebd6bf]/80 cursor-pointer" aria-label="Abrir menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <a href="inicial.html" class="flex items-center gap-2.5">
+        <svg class="me-2" width="24" height="24" viewBox="0 0 100 100" style="vertical-align: middle;">
+        <!-- Círculo externo -->
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none" />
+        <!-- Anéis concêntricos -->
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" />
+        <circle cx="50" cy="50" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.8" />
+        <!-- Centro colorido -->
+        <circle cx="50" cy="50" r="12" fill="#d9381e" />
+        <circle cx="50" cy="50" r="6" fill="#1b2a4a" />
+      </svg>Solaris
+      </a>
+    </div>
+    <span class="text-xs font-mono text-[#d64a2b]">COMUNICAÇÕES</span>
+  </header>
+
+  <div class="flex-1 flex flex-col lg:flex-row">
+    <aside id="sidebar-esq" class="hidden lg:flex lg:w-52 bg-[#170c0c] border-b lg:border-b-0 lg:border-r border-[#ebd6bf]/15 flex-col shrink-0">
+      <nav class="p-2 space-y-1 text-sm">
+        <a href="inicial.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">painel</a>
+        <a href="projetos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">projetos</a>
+        <a href="tempos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">relatórios</a>
+        <a href="comunicacao.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf]">equipe</a>
+        <div class="pt-3 mt-3 border-t border-[#ebd6bf]/10 space-y-1 text-xs">
+          <a href="calendario.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">calendário</a>
+          <a href="caderno.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">notebook / sketch</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-5 md:p-8 max-w-6xl mx-auto w-full space-y-6">
+      <header class="solar-card rounded-xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="text-[11px] font-mono uppercase tracking-widest text-[#d64a2b]">Solaris • Chat &amp; Correio Corporativo</p>
+          <h1 class="text-2xl font-bold">Comunicações</h1>
+        </div>
+        <div class="flex gap-2">
+          <button type="button" onclick="trocarAba('chat')" id="tab-chat" class="px-4 py-2 rounded-md text-xs font-bold uppercase bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf] cursor-pointer">
+            Chat da Equipe
+          </button>
+          <button type="button" onclick="trocarAba('email')" id="tab-email" class="px-4 py-2 rounded-md text-xs font-bold uppercase bg-[#0c0505] border border-[#ebd6bf]/20 text-[#ebd6bf] cursor-pointer">
+            E-mail
+          </button>
+        </div>
+      </header>
+
+      <!-- Painel Chat -->
+      <section id="painel-chat" class="solar-card rounded-xl p-5 space-y-4">
+        <div id="mensagens-chat" class="space-y-3 max-h-80 overflow-y-auto pr-1">
+          <div class="p-3 rounded-lg bg-[#0c0505] border border-[#ebd6bf]/10 text-xs">
+            <span class="font-mono text-[#d64a2b] font-bold">Lucas (Infra) • 14:12</span>
+            <p class="mt-1">HPA validado no cluster de teste; latência p95 em 42ms.</p>
+          </div>
+          <div class="p-3 rounded-lg bg-[#0c0505] border border-[#ebd6bf]/10 text-xs">
+            <span class="font-mono text-[#ebd6bf] font-bold">Camila • 14:15</span>
+            <p class="mt-1">Perfeito! Vou anexar os prints do Grafana na pasta de evidências.</p>
+          </div>
+        </div>
+
+        <form onsubmit="enviarChat(event)" class="flex gap-2">
+          <input id="input-chat" type="text" required placeholder="Digite uma mensagem para a equipe Solaris..." class="solar-input flex-1 px-3 py-2 rounded-md text-xs" />
+          <button type="submit" class="btn-solar px-4 py-2 rounded-md text-xs font-bold uppercase cursor-pointer">Enviar</button>
+        </form>
+      </section>
+
+      <!-- Painel E-mail -->
+      <section id="painel-email" class="solar-card rounded-xl p-5 space-y-4 hidden">
+        <div id="lista-emails" class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-lg bg-[#0c0505] border border-[#d64a2b]/40">
+            <div class="flex justify-between font-mono text-[11px] text-[#d64a2b]">
+              <span>De: arquitetura@solaris.io</span>
+              <span>Hoje, 10:40</span>
+            </div>
+            <p class="font-bold mt-1">Assunto: Revisão da Arquitetura de 3 Camadas e HA</p>
+            <p class="text-[#ebd6bf]/75 mt-1">Lembrete de incluir diagrama, logs e dashboards na entrega final de 04/12.</p>
+          </div>
+        </div>
+
+        <form onsubmit="enviarEmail(event)" class="space-y-2.5 pt-2 border-t border-[#ebd6bf]/10">
+          <input id="email-para" type="email" required placeholder="Para (ex: squad@solaris.io)" class="solar-input w-full px-3 py-2 rounded-md text-xs" />
+          <input id="email-assunto" type="text" required placeholder="Assunto" class="solar-input w-full px-3 py-2 rounded-md text-xs" />
+          <textarea id="email-corpo" rows="2" required placeholder="Escreva a mensagem..." class="solar-input w-full px-3 py-2 rounded-md text-xs"></textarea>
+          <button type="submit" class="btn-solar px-4 py-2 rounded-md text-xs font-bold uppercase cursor-pointer">Disparar E-mail</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function trocarAba(aba) {
+      document.getElementById('painel-chat').classList.toggle('hidden', aba !== 'chat');
+      document.getElementById('painel-email').classList.toggle('hidden', aba !== 'email');
+      document.getElementById('tab-chat').classList.toggle('border-[#d64a2b]', aba === 'chat');
+      document.getElementById('tab-chat').classList.toggle('border-[#ebd6bf]/20', aba !== 'chat');
+      document.getElementById('tab-email').classList.toggle('border-[#d64a2b]', aba === 'email');
+      document.getElementById('tab-email').classList.toggle('border-[#ebd6bf]/20', aba !== 'email');
+    }
+
+    function enviarChat(event) {
+      event.preventDefault();
+      const input = document.getElementById('input-chat');
+      const box = document.getElementById('mensagens-chat');
+      const hora = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      box.innerHTML += `
+        <div class="p-3 rounded-lg bg-[#0c0505] border border-[#d64a2b]/40 text-xs">
+          <span class="font-mono text-[#d64a2b] font-bold">Você • ${hora}</span>
+          <p class="mt-1">${input.value}</p>
+        </div>
+      `;
+      input.value = '';
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function enviarEmail(event) {
+      event.preventDefault();
+      const para = document.getElementById('email-para').value;
+      const assunto = document.getElementById('email-assunto').value;
+      const corpo = document.getElementById('email-corpo').value;
+      const lista = document.getElementById('lista-emails');
+
+      lista.innerHTML = `
+        <div class="p-3 rounded-lg bg-[#0c0505] border border-[#ebd6bf]/20">
+          <div class="flex justify-between font-mono text-[11px] text-[#ebd6bf]/70">
+            <span>Para: ${para}</span>
+            <span>Agora</span>
+          </div>
+          <p class="font-bold mt-1">Assunto: ${assunto}</p>
+          <p class="text-[#ebd6bf]/75 mt-1">${corpo}</p>
+        </div>
+      ` + lista.innerHTML;
+
+      event.target.reset();
+    }
+
+    function toggleSidebarMobile() {
+      const side = document.getElementById('sidebar-esq');
+      side.classList.toggle('hidden');
+      side.classList.toggle('flex');
+    }
+  </script>
+</body>
+</html>

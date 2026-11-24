@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaris — Estatísticas de Tempo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#0c0505] text-[#ebd6bf] font-sans min-h-screen flex flex-col">
+  <header class="h-14 bg-[#170c0c] border-b border-[#ebd6bf]/15 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <button type="button" onclick="toggleSidebarMobile()" class="lg:hidden p-1.5 rounded hover:bg-[#0c0505] text-[#ebd6bf]/80 cursor-pointer" aria-label="Abrir menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <a href="inicial.html" class="flex items-center gap-2.5">
+        <svg class="me-2" width="24" height="24" viewBox="0 0 100 100" style="vertical-align: middle;">
+        <!-- Círculo externo -->
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none" />
+        <!-- Anéis concêntricos -->
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" />
+        <circle cx="50" cy="50" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.8" />
+        <!-- Centro colorido -->
+        <circle cx="50" cy="50" r="12" fill="#d9381e" />
+        <circle cx="50" cy="50" r="6" fill="#1b2a4a" />
+      </svg>Solaris
+      </a>
+    </div>
+    <span class="text-xs font-mono text-[#d64a2b]">RELATÓRIO DE HORAS</span>
+  </header>
+
+  <div class="flex-1 flex flex-col lg:flex-row">
+    <aside id="sidebar-esq" class="hidden lg:flex lg:w-52 bg-[#170c0c] border-b lg:border-b-0 lg:border-r border-[#ebd6bf]/15 flex-col shrink-0">
+      <nav class="p-2 space-y-1 text-sm">
+        <a href="inicial.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">painel</a>
+        <a href="projetos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">projetos</a>
+        <a href="tempos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf]">relatórios</a>
+        <a href="comunicacao.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">equipe</a>
+        <div class="pt-3 mt-3 border-t border-[#ebd6bf]/10 space-y-1 text-xs">
+          <a href="calendario.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">calendário</a>
+          <a href="caderno.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">notebook / sketch</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-5 md:p-8 max-w-6xl mx-auto w-full space-y-6">
+      <header class="solar-card rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p class="text-[11px] font-mono uppercase tracking-widest text-[#d64a2b]">Solaris • Telemetria de Horas</p>
+          <h1 class="text-2xl font-bold">Dashboard — Estatísticas de Tempo</h1>
+        </div>
+        <div class="flex gap-2">
+          <button type="button" onclick="filtrarPeriodo('semana')" id="btn-semana" class="px-3 py-1.5 rounded text-xs font-mono bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf] cursor-pointer">Semana (40h)</button>
+          <button type="button" onclick="filtrarPeriodo('hoje')" id="btn-hoje" class="px-3 py-1.5 rounded text-xs font-mono bg-[#0c0505] border border-[#ebd6bf]/25 text-[#ebd6bf] cursor-pointer">Hoje (8h)</button>
+        </div>
+      </header>
+
+      <section id="cards-tempo" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"></section>
+
+      <section class="solar-card rounded-xl p-6 space-y-4">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-[#d64a2b]">Distribuição Percentual por Atividade</h2>
+        <div id="barras-tempo" class="space-y-4"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const dados = {
+      semana: [
+        { categoria: 'Projeto A', horas: 13.5, cor: 'bar-proj-a' },
+        { categoria: 'Projeto B', horas: 10.0, cor: 'bar-proj-b' },
+        { categoria: 'Reunião', horas: 6.5, cor: 'bar-reuniao' },
+        { categoria: 'Estudos', horas: 5.5, cor: 'bar-estudos' },
+        { categoria: 'Descanso', horas: 4.5, cor: 'bar-descanso' }
+      ],
+      hoje: [
+        { categoria: 'Projeto A', horas: 3.0, cor: 'bar-proj-a' },
+        { categoria: 'Projeto B', horas: 2.0, cor: 'bar-proj-b' },
+        { categoria: 'Reunião', horas: 1.5, cor: 'bar-reuniao' },
+        { categoria: 'Estudos', horas: 0.8, cor: 'bar-estudos' },
+        { categoria: 'Descanso', horas: 0.7, cor: 'bar-descanso' }
+      ]
+    };
+
+    function filtrarPeriodo(periodo) {
+      document.getElementById('btn-semana').classList.toggle('border-[#d64a2b]', periodo === 'semana');
+      document.getElementById('btn-semana').classList.toggle('border-[#ebd6bf]/25', periodo !== 'semana');
+      document.getElementById('btn-hoje').classList.toggle('border-[#d64a2b]', periodo === 'hoje');
+      document.getElementById('btn-hoje').classList.toggle('border-[#ebd6bf]/25', periodo !== 'hoje');
+
+      const itens = dados[periodo];
+      const total = itens.reduce((acc, item) => acc + item.horas, 0);
+
+      const cardsEl = document.getElementById('cards-tempo');
+      const barrasEl = document.getElementById('barras-tempo');
+      cardsEl.innerHTML = '';
+      barrasEl.innerHTML = '';
+
+      itens.forEach((item) => {
+        const pct = Math.round((item.horas / total) * 100);
+        cardsEl.innerHTML += `
+          <div class="solar-card rounded-xl p-4">
+            <p class="text-[11px] font-mono text-[#ebd6bf]/65 uppercase">${item.categoria}</p>
+            <p class="text-xl font-bold font-mono mt-1 text-[#ebd6bf]">${item.horas.toFixed(1)}h</p>
+            <p class="text-[11px] font-mono text-[#d64a2b] mt-0.5">${pct}% do tempo</p>
+          </div>
+        `;
+
+        barrasEl.innerHTML += `
+          <div>
+            <div class="flex justify-between text-xs font-mono mb-1">
+              <span>${item.categoria}</span>
+              <span>${item.horas.toFixed(1)}h (${pct}%)</span>
+            </div>
+            <div class="w-full h-3 rounded-full bg-[#0c0505] overflow-hidden border border-[#ebd6bf]/10">
+              <div class="h-full rounded-full ${item.cor} transition-all duration-500" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function toggleSidebarMobile() {
+      const side = document.getElementById('sidebar-esq');
+      side.classList.toggle('hidden');
+      side.classList.toggle('flex');
+    }
+
+    filtrarPeriodo('semana');
+  </script>
+</body>
+</html>

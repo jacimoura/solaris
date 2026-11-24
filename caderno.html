@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaris — Notebook / Sketchbook</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#0c0505] text-[#ebd6bf] font-sans min-h-screen flex flex-col">
+  <header class="h-14 bg-[#170c0c] border-b border-[#ebd6bf]/15 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <button type="button" onclick="toggleSidebarMobile()" class="lg:hidden p-1.5 rounded hover:bg-[#0c0505] text-[#ebd6bf]/80 cursor-pointer" aria-label="Abrir menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <a href="inicial.html" class="flex items-center gap-2.5">
+        <svg class="me-2" width="24" height="24" viewBox="0 0 100 100" style="vertical-align: middle;">
+        <!-- Círculo externo -->
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none" />
+        <!-- Anéis concêntricos -->
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" />
+        <circle cx="50" cy="50" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.8" />
+        <!-- Centro colorido -->
+        <circle cx="50" cy="50" r="12" fill="#d9381e" />
+        <circle cx="50" cy="50" r="6" fill="#1b2a4a" />
+      </svg>Solaris
+      </a>
+    </div>
+    <span class="text-xs font-mono text-[#d64a2b]">NOTEBOOK / SKETCHBOOK</span>
+  </header>
+
+  <div class="flex-1 flex flex-col lg:flex-row">
+    <aside id="sidebar-esq" class="hidden lg:flex lg:w-52 bg-[#170c0c] border-b lg:border-b-0 lg:border-r border-[#ebd6bf]/15 flex-col shrink-0">
+      <nav class="p-2 space-y-1 text-sm">
+        <a href="inicial.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">painel</a>
+        <a href="projetos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">projetos</a>
+        <a href="tempos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">relatórios</a>
+        <a href="comunicacao.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">equipe</a>
+        <div class="pt-3 mt-3 border-t border-[#ebd6bf]/10 space-y-1 text-xs">
+          <a href="calendario.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">calendário</a>
+          <a href="caderno.html" class="flex items-center gap-2 px-3 py-2 rounded bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf]">notebook / sketch</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-5 md:p-8 max-w-7xl mx-auto w-full space-y-6">
+      <header class="solar-card rounded-xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p class="text-[11px] font-mono uppercase tracking-widest text-[#d64a2b]">Solaris • Notas &amp; Rascunhos Visuais</p>
+          <h1 class="text-2xl font-bold">Notebook / Sketchbook</h1>
+        </div>
+        <span id="status-nota" class="text-xs font-mono text-[#ebd6bf]/70">Pronto</span>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Notebook -->
+        <section class="solar-card rounded-xl p-5 flex flex-col space-y-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-[#d64a2b]">Notebook (Anotações)</h2>
+            <button type="button" onclick="salvarNota()" class="btn-solar px-3 py-1.5 rounded text-xs font-bold uppercase cursor-pointer">
+              Salvar Nota
+            </button>
+          </div>
+          <input id="titulo-nota" type="text" value="Notas da Arquitetura Solaris — 04/12" class="solar-input px-3 py-2 rounded-md text-xs font-bold" />
+          <textarea id="corpo-nota" rows="12" class="solar-input p-3 rounded-md text-xs font-mono leading-relaxed">- 3 camadas: Frontend, Backend (Microsserviços), Dados
+- Alta Disponibilidade: >= 2 réplicas + probes + HPA
+- Observabilidade: /metrics (Prometheus), Grafana e logs JSON</textarea>
+        </section>
+
+        <!-- Sketchbook -->
+        <section class="solar-card rounded-xl p-5 flex flex-col space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-[#d64a2b]">Sketchbook</h2>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="setCor('#d64a2b')" class="w-6 h-6 rounded-full bg-[#d64a2b] border border-[#ebd6bf] cursor-pointer" title="Cor Solar"></button>
+              <button type="button" onclick="setCor('#ebd6bf')" class="w-6 h-6 rounded-full bg-[#ebd6bf] border border-[#0c0505] cursor-pointer" title="Cor Areia"></button>
+              <button type="button" onclick="limparCanvas()" class="px-2.5 py-1 rounded bg-[#0c0505] border border-[#ebd6bf]/25 text-xs font-mono cursor-pointer">
+                Limpar
+              </button>
+            </div>
+          </div>
+
+          <canvas id="sketch-canvas" width="600" height="320" class="sketch-canvas w-full h-72 rounded-lg cursor-crosshair"></canvas>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function salvarNota() {
+      const titulo = document.getElementById('titulo-nota').value;
+      const corpo = document.getElementById('corpo-nota').value;
+      localStorage.setItem('solaris_nota', JSON.stringify({ titulo, corpo }));
+      const status = document.getElementById('status-nota');
+      status.textContent = 'Salvo localmente às ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    const notaSalva = JSON.parse(localStorage.getItem('solaris_nota') || 'null');
+    if (notaSalva) {
+      document.getElementById('titulo-nota').value = notaSalva.titulo;
+      document.getElementById('corpo-nota').value = notaSalva.corpo;
+    }
+
+    const canvas = document.getElementById('sketch-canvas');
+    const ctx = canvas.getContext('2d');
+    let desenhando = false;
+    let corAtual = '#d64a2b';
+
+    function ajustarResolucaoCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.width = Math.max(300, Math.floor(rect.width));
+      canvas.height = Math.max(220, Math.floor(rect.height));
+      ctx.putImageData(snapshot, 0, 0);
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = corAtual;
+    }
+
+    function setCor(cor) {
+      corAtual = cor;
+      ctx.strokeStyle = corAtual;
+    }
+
+    function limparCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function pegarPosicao(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function iniciarTraco(e) {
+      e.preventDefault();
+      desenhando = true;
+      const pos = pegarPosicao(e);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+    }
+
+    function moverTraco(e) {
+      if (!desenhando) return;
+      e.preventDefault();
+      const pos = pegarPosicao(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+    }
+
+    function pararTraco() {
+      desenhando = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener('mousedown', iniciarTraco);
+    canvas.addEventListener('mousemove', moverTraco);
+    window.addEventListener('mouseup', pararTraco);
+
+    canvas.addEventListener('touchstart', iniciarTraco, { passive: false });
+    canvas.addEventListener('touchmove', moverTraco, { passive: false });
+    window.addEventListener('touchend', pararTraco);
+
+    window.addEventListener('resize', ajustarResolucaoCanvas);
+    ajustarResolucaoCanvas();
+
+    function toggleSidebarMobile() {
+      const side = document.getElementById('sidebar-esq');
+      side.classList.toggle('hidden');
+      side.classList.toggle('flex');
+    }
+  </script>
+</body>
+</html>

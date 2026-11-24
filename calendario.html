@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaris — Calendário</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#0c0505] text-[#ebd6bf] font-sans min-h-screen flex flex-col">
+  <header class="h-14 bg-[#170c0c] border-b border-[#ebd6bf]/15 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <button type="button" onclick="toggleSidebarMobile()" class="lg:hidden p-1.5 rounded hover:bg-[#0c0505] text-[#ebd6bf]/80 cursor-pointer" aria-label="Abrir menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <a href="inicial.html" class="flex items-center gap-2.5">
+        <svg class="me-2" width="24" height="24" viewBox="0 0 100 100" style="vertical-align: middle;">
+        <!-- Círculo externo -->
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none" />
+        <!-- Anéis concêntricos -->
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" />
+        <circle cx="50" cy="50" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.8" />
+        <!-- Centro colorido -->
+        <circle cx="50" cy="50" r="12" fill="#d9381e" />
+        <circle cx="50" cy="50" r="6" fill="#1b2a4a" />
+      </svg>Solaris
+      </a>
+    </div>
+    <span class="text-xs font-mono text-[#d64a2b]">CALENDÁRIO SEMANAL</span>
+  </header>
+
+  <div class="flex-1 flex flex-col lg:flex-row">
+    <aside id="sidebar-esq" class="hidden lg:flex lg:w-52 bg-[#170c0c] border-b lg:border-b-0 lg:border-r border-[#ebd6bf]/15 flex-col shrink-0">
+      <nav class="p-2 space-y-1 text-sm">
+        <a href="inicial.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">painel</a>
+        <a href="projetos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">projetos</a>
+        <a href="tempos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">relatórios</a>
+        <a href="comunicacao.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">equipe</a>
+        <div class="pt-3 mt-3 border-t border-[#ebd6bf]/10 space-y-1 text-xs">
+          <a href="calendario.html" class="flex items-center gap-2 px-3 py-2 rounded bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf]">calendário</a>
+          <a href="caderno.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">notebook / sketch</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-5 md:p-8 max-w-7xl mx-auto w-full space-y-6">
+      <header class="solar-card rounded-xl p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <p class="text-[11px] font-mono uppercase tracking-widest text-[#d64a2b]">Solaris • Alocação por Faixa</p>
+          <h1 class="text-2xl font-bold">Calendário de Atividades</h1>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="px-2.5 py-1 rounded badge-projeto-b">Projeto B</span>
+          <span class="px-2.5 py-1 rounded badge-reuniao">Reunião</span>
+          <span class="px-2.5 py-1 rounded badge-descanso">Indisponível / Descanso</span>
+        </div>
+      </header>
+
+      <form onsubmit="adicionarSlot(event)" class="solar-card rounded-xl p-4 grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <select id="dia-select" class="solar-input px-3 py-2 rounded-md text-xs">
+          <option value="Seg">Segunda-feira</option>
+          <option value="Ter">Terça-feira</option>
+          <option value="Qua">Quarta-feira</option>
+          <option value="Qui">Quinta-feira</option>
+          <option value="Sex">Sexta-feira</option>
+        </select>
+
+        <select id="hora-select" class="solar-input px-3 py-2 rounded-md text-xs">
+          <option value="09:00">09:00</option>
+          <option value="11:00">11:00</option>
+          <option value="14:00">14:00</option>
+          <option value="16:00">16:00</option>
+        </select>
+
+        <select id="tipo-select" class="solar-input px-3 py-2 rounded-md text-xs">
+          <option value="projeto-b">Projeto B</option>
+          <option value="reuniao">Reunião</option>
+          <option value="descanso">Indisponível / Descanso</option>
+        </select>
+
+        <button type="submit" class="btn-solar py-2 px-4 rounded-md text-xs font-bold uppercase tracking-wider cursor-pointer">
+          Alocar no Horário
+        </button>
+      </form>
+
+      <section class="solar-card rounded-xl p-4 overflow-x-auto">
+        <table class="w-full min-w-[780px] text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-[#ebd6bf]/15 font-mono text-[#d64a2b]">
+              <th class="py-3 px-3 w-24">Horário</th>
+              <th class="py-3 px-3">Seg</th>
+              <th class="py-3 px-3">Ter</th>
+              <th class="py-3 px-3">Qua</th>
+              <th class="py-3 px-3">Qui</th>
+              <th class="py-3 px-3">Sex</th>
+            </tr>
+          </thead>
+          <tbody id="grade-calendario" class="divide-y divide-[#ebd6bf]/10"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const dias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
+    const horarios = ['09:00', '11:00', '14:00', '16:00'];
+
+    const rotulos = {
+      'projeto-b': { nome: 'Projeto B', cls: 'badge-projeto-b' },
+      'reuniao': { nome: 'Reunião', cls: 'badge-reuniao' },
+      'descanso': { nome: 'Indisponível / Descanso', cls: 'badge-descanso' }
+    };
+
+    const agenda = {
+      'Seg-09:00': ['projeto-b', 'reuniao'],
+      'Seg-11:00': ['descanso'],
+      'Ter-14:00': ['reuniao', 'projeto-b'],
+      'Qua-09:00': ['projeto-b'],
+      'Qua-16:00': ['descanso'],
+      'Qui-11:00': ['reuniao'],
+      'Sex-14:00': ['projeto-b', 'descanso']
+    };
+
+    function renderGrade() {
+      const tbody = document.getElementById('grade-calendario');
+      tbody.innerHTML = '';
+
+      horarios.forEach((hora) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td class="py-3 px-3 font-mono font-bold text-[#ebd6bf]/80">${hora}</td>`;
+
+        dias.forEach((dia) => {
+          const chave = `${dia}-${hora}`;
+          const itens = agenda[chave] || [];
+          const td = document.createElement('td');
+          td.className = 'py-2.5 px-2 align-top';
+
+          const wrapper = document.createElement('div');
+          wrapper.className = 'space-y-1.5 min-h-[68px] p-1.5 rounded bg-[#0c0505]/70 border border-[#ebd6bf]/10';
+
+          itens.forEach((tipo, idx) => {
+            const info = rotulos[tipo];
+            const tag = document.createElement('div');
+            tag.className = `px-2 py-1 rounded text-[11px] font-semibold flex items-center justify-between ${info.cls}`;
+            tag.innerHTML = `<span>${info.nome}</span><button type="button" onclick="removerItem('${chave}', ${idx})" class="ml-1 opacity-75 hover:opacity-100 cursor-pointer">&times;</button>`;
+            wrapper.appendChild(tag);
+          });
+
+          td.appendChild(wrapper);
+          tr.appendChild(td);
+        });
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function adicionarSlot(event) {
+      event.preventDefault();
+      const dia = document.getElementById('dia-select').value;
+      const hora = document.getElementById('hora-select').value;
+      const tipo = document.getElementById('tipo-select').value;
+      const chave = `${dia}-${hora}`;
+      agenda[chave] = agenda[chave] || [];
+      if (agenda[chave].length >= 3) agenda[chave].shift();
+      agenda[chave].push(tipo);
+      renderGrade();
+    }
+
+    function removerItem(chave, index) {
+      agenda[chave].splice(index, 1);
+      renderGrade();
+    }
+
+    function toggleSidebarMobile() {
+      const side = document.getElementById('sidebar-esq');
+      side.classList.toggle('hidden');
+      side.classList.toggle('flex');
+    }
+
+    renderGrade();
+  </script>
+</body>
+</html>

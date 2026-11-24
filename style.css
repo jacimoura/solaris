@@ -1,0 +1,89 @@
+@keyframes lightGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(214, 74, 43, 0.55), 0 0 24px rgba(214, 74, 43, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(214, 74, 43, 0.95), 0 0 38px rgba(235, 214, 191, 0.45);
+  }
+}
+
+/* Brilho pulsante para o <aside> flutuante e o círculo central */
+.floating-aside {
+  animation: lightGlow 2.4s infinite ease-in-out;
+}
+
+.user-center-circle {
+  animation: lightGlow 3.2s infinite ease-in-out;
+}
+
+/* Cards e painéis padrão Solaris */
+.solar-card {
+  background-color: #170c0c;
+  border: 1px solid rgba(235, 214, 191, 0.16);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.solar-card:hover {
+  border-color: rgba(214, 74, 43, 0.55);
+  box-shadow: 0 0 18px rgba(214, 74, 43, 0.22);
+}
+
+/* Inputs e selects com brilho ao focar */
+.solar-input {
+  background-color: #0c0505;
+  border: 1px solid rgba(235, 214, 191, 0.25);
+  color: #ebd6bf;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.solar-input:focus {
+  border-color: #d64a2b;
+  box-shadow: 0 0 12px rgba(214, 74, 43, 0.45);
+}
+
+/* Botão principal com gradiente animado */
+.btn-solar {
+  background-image: linear-gradient(90deg, #d64a2b, #ebd6bf, #d64a2b);
+  background-size: 200% auto;
+  color: #0c0505;
+  transition: background-position 0.45s ease, box-shadow 0.3s ease;
+}
+
+.btn-solar:hover {
+  background-position: right center;
+  box-shadow: 0 0 18px rgba(214, 74, 43, 0.55);
+}
+
+/* Badges do Calendário */
+.badge-projeto-b {
+  background-color: rgba(214, 74, 43, 0.22);
+  border: 1px solid #d64a2b;
+  color: #ebd6bf;
+}
+
+.badge-reuniao {
+  background-color: rgba(235, 214, 191, 0.16);
+  border: 1px solid rgba(235, 214, 191, 0.65);
+  color: #ebd6bf;
+}
+
+.badge-descanso {
+  background-color: rgba(120, 53, 39, 0.35);
+  border: 1px dashed #e07a5f;
+  color: #f4d8c8;
+}
+
+/* Barras do Dashboard de Tempo */
+.bar-proj-a { background-color: #d64a2b; }
+.bar-proj-b { background-color: #e07a5f; }
+.bar-reuniao { background-color: #ebd6bf; }
+.bar-estudos { background-color: #b85d3b; }
+.bar-descanso { background-color: #8d493a; }
+
+/* Canvas do Sketchbook */
+.sketch-canvas {
+  background-color: #0c0505;
+  border: 1px solid rgba(214, 74, 43, 0.5);
+  touch-action: none;
+}   

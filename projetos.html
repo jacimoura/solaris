@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaris — Estatísticas de Projeto</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#0c0505] text-[#ebd6bf] font-sans min-h-screen flex flex-col">
+  <header class="h-14 bg-[#170c0c] border-b border-[#ebd6bf]/15 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <button type="button" onclick="toggleSidebarMobile()" class="lg:hidden p-1.5 rounded hover:bg-[#0c0505] text-[#ebd6bf]/80 cursor-pointer" aria-label="Abrir menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+      <a href="inicial.html" class="flex items-center gap-2.5">
+        <svg class="me-2" width="24" height="24" viewBox="0 0 100 100" style="vertical-align: middle;">
+        <!-- Círculo externo -->
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none" />
+        <!-- Anéis concêntricos -->
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" />
+        <circle cx="50" cy="50" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.8" />
+        <!-- Centro colorido -->
+        <circle cx="50" cy="50" r="12" fill="#d9381e" />
+        <circle cx="50" cy="50" r="6" fill="#1b2a4a" />
+      </svg>Solaris
+      </a>
+    </div>
+    <span class="text-xs font-mono text-[#d64a2b]">PROJETOS</span>
+  </header>
+
+  <div class="flex-1 flex flex-col lg:flex-row">
+    <aside id="sidebar-esq" class="hidden lg:flex lg:w-52 bg-[#170c0c] border-b lg:border-b-0 lg:border-r border-[#ebd6bf]/15 flex-col shrink-0">
+      <nav class="p-2 space-y-1 text-sm">
+        <a href="inicial.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">painel</a>
+        <a href="projetos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf]">projetos</a>
+        <a href="tempos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">relatórios</a>
+        <a href="comunicacao.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">equipe</a>
+        <div class="pt-3 mt-3 border-t border-[#ebd6bf]/10 space-y-1 text-xs">
+          <a href="calendario.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">calendário</a>
+          <a href="caderno.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">notebook / sketch</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="flex-1 p-5 md:p-8 max-w-6xl mx-auto w-full space-y-6">
+      <header class="solar-card rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <p class="text-[11px] font-mono uppercase tracking-widest text-[#d64a2b]">Solaris • Portfólio &amp; Entregas</p>
+          <h1 class="text-2xl font-bold">Dashboard — Estatísticas de Projeto</h1>
+        </div>
+        <select id="filtro-importancia" onchange="renderProjetos()" class="solar-input px-3 py-2 rounded-md text-xs font-mono">
+          <option value="todas">Importância: Todas</option>
+          <option value="Crítica">Crítica</option>
+          <option value="Alta">Alta</option>
+          <option value="Média">Média</option>
+        </select>
+      </header>
+
+      <section id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 gap-5"></section>
+    </main>
+  </div>
+
+  <script>
+    const projetos = [
+      {
+        nome: 'Projeto A — Cluster Kubernetes HA',
+        importancia: 'Crítica',
+        prazo: '02/12',
+        tarefasConcluidas: 18,
+        tarefasTotal: 22
+      },
+      {
+        nome: 'Projeto B — Observabilidade Prometheus & Grafana',
+        importancia: 'Alta',
+        prazo: '04/12',
+        tarefasConcluidas: 11,
+        tarefasTotal: 16
+      },
+      {
+        nome: 'Projeto C — Gateway de Comunicações',
+        importancia: 'Média',
+        prazo: '10/12',
+        tarefasConcluidas: 7,
+        tarefasTotal: 14
+      },
+      {
+        nome: 'Projeto D — Otimização de Custos Cloud',
+        importancia: 'Alta',
+        prazo: '15/12',
+        tarefasConcluidas: 5,
+        tarefasTotal: 10
+      }
+    ];
+
+    function renderProjetos() {
+      const filtro = document.getElementById('filtro-importancia').value;
+      const container = document.getElementById('grid-projetos');
+      container.innerHTML = '';
+
+      projetos
+        .filter((p) => filtro === 'todas' || p.importancia === filtro)
+        .forEach((p) => {
+          const pct = Math.round((p.tarefasConcluidas / p.tarefasTotal) * 100);
+          container.innerHTML += `
+            <article class="solar-card rounded-xl p-5 space-y-4">
+              <div class="flex items-start justify-between gap-2">
+                <h2 class="font-bold text-base">${p.nome}</h2>
+                <span class="px-2.5 py-0.5 rounded text-[11px] font-mono bg-[#d64a2b]/20 border border-[#d64a2b] text-[#ebd6bf]">${p.importancia}</span>
+              </div>
+
+              <div class="grid grid-cols-3 gap-2 text-xs font-mono bg-[#0c0505] p-3 rounded-lg border border-[#ebd6bf]/10">
+                <div>
+                  <span class="text-[#ebd6bf]/55 block text-[10px]">PRAZO</span>
+                  <strong class="text-[#ebd6bf]">${p.prazo}</strong>
+                </div>
+                <div>
+                  <span class="text-[#ebd6bf]/55 block text-[10px]">TAREFAS</span>
+                  <strong class="text-[#d64a2b]">${p.tarefasConcluidas}/${p.tarefasTotal}</strong>
+                </div>
+                <div>
+                  <span class="text-[#ebd6bf]/55 block text-[10px]">ANDAMENTO</span>
+                  <strong class="text-[#ebd6bf]">${pct}%</strong>
+                </div>
+              </div>
+
+              <div class="w-full h-2.5 rounded-full bg-[#0c0505] overflow-hidden">
+                <div class="h-full bg-[#d64a2b] transition-all duration-500" style="width: ${pct}%"></div>
+              </div>
+            </article>
+          `;
+        });
+    }
+
+    function toggleSidebarMobile() {
+      const side = document.getElementById('sidebar-esq');
+      side.classList.toggle('hidden');
+      side.classList.toggle('flex');
+    }
+
+    renderProjetos();
+  </script>
+</body>
+</html>

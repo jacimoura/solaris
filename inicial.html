@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Solaris — Painel Inicial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-[#0c0505] text-[#ebd6bf] font-sans min-h-screen flex flex-col">
+  <!-- Barra Superior -->
+  <header class="h-14 bg-[#170c0c] border-b border-[#ebd6bf]/15 px-4 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-3">
+      <button type="button" onclick="toggleSidebarMobile()" class="lg:hidden p-1.5 rounded hover:bg-[#0c0505] text-[#ebd6bf]/80 cursor-pointer" aria-label="Abrir menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <a href="inicial.html" class="flex items-center gap-2.5">
+        <svg class="me-2" width="24" height="24" viewBox="0 0 100 100" style="vertical-align: middle;">
+        <!-- Círculo externo -->
+        <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="3" fill="none" />
+        <!-- Anéis concêntricos -->
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6" />
+        <circle cx="50" cy="50" r="20" stroke="currentColor" stroke-width="2" fill="none" opacity="0.8" />
+        <!-- Centro colorido -->
+        <circle cx="50" cy="50" r="12" fill="#d9381e" />
+        <circle cx="50" cy="50" r="6" fill="#1b2a4a" />
+      </svg>Solaris
+      </a>
+    </div>
+
+    <div class="flex items-center gap-3 text-[#ebd6bf]/80">
+      <button type="button" onclick="alternarBusca()" class="p-1.5 rounded-full hover:bg-[#0c0505] hover:text-[#d64a2b] transition-colors cursor-pointer" title="Buscar">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 10a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+
+      <button type="button" onclick="mostrarAviso('Nenhuma notificação pendente no Solaris.')" class="p-1.5 rounded-full hover:bg-[#0c0505] hover:text-[#d64a2b] transition-colors cursor-pointer relative" title="Notificações">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2a2 2 0 01-.6 1.4L4 17h5m6 0a3 3 0 11-6 0h6z" />
+        </svg>
+        <span class="w-2 h-2 rounded-full bg-[#d64a2b] absolute top-1.5 right-1.5"></span>
+      </button>
+
+      <button type="button" onclick="editarUsuario()" class="w-8 h-8 rounded-full border border-[#ebd6bf]/30 bg-[#0c0505] flex items-center justify-center hover:border-[#d64a2b] transition-colors cursor-pointer" title="Alterar nome do usuário">
+        <svg class="w-4 h-4 text-[#ebd6bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Barra de Busca Rápida -->
+  <div id="barra-busca" class="hidden bg-[#170c0c] border-b border-[#d64a2b]/30 px-4 py-2">
+    <input id="input-busca" type="text" placeholder="Filtrar projetos, tarefas ou páginas do Solaris..." class="solar-input w-full max-w-md rounded px-3 py-1.5 text-xs" />
+  </div>
+
+  <!-- Corpo Principal -->
+  <div class="flex-1 flex flex-col lg:flex-row relative">
+    <!-- Sidebar Esquerda de Navegação -->
+    <aside id="sidebar-esq" class="hidden lg:flex lg:w-52 bg-[#170c0c] border-b lg:border-b-0 lg:border-r border-[#ebd6bf]/15 flex-col shrink-0 z-20">
+      <nav class="p-2 space-y-1 text-sm" aria-label="Menu lateral">
+        <a href="inicial.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium bg-[#0c0505] border border-[#d64a2b] text-[#ebd6bf] shadow-[0_0_12px_rgba(214,74,43,0.3)]">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke- linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          </svg>
+          <span>painel</span>
+        </a>
+
+        <a href="projetos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf] transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
+          <span>projetos</span>
+        </a>
+
+        <a href="tempos.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf] transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+          <span>relatórios</span>
+        </a>
+
+        <a href="comunicacao.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded font-medium text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf] transition-colors">
+          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+          <span>equipe</span>
+        </a>
+
+        <div class="pt-3 mt-3 border-t border-[#ebd6bf]/10 space-y-1 text-xs">
+          <a href="calendario.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">calendário</a>
+          <a href="caderno.html" class="flex items-center gap-2 px-3 py-2 rounded text-[#ebd6bf]/75 hover:bg-[#0c0505] hover:text-[#ebd6bf]">notebook / sketch</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Painel Principal no Meio da Página -->
+    <main class="flex-1 p-5 md:p-8 pr-32 sm:pr-44 flex flex-col items-center justify-center min-w-0">
+      <div class="relative w-[320px] h-[320px] sm:w-[440px] sm:h-[440px] md:w-[500px] md:h-[500px] flex items-center justify-center select-none">
+        <!-- Marcador superior "0" -->
+        <span class="absolute top-1 left-1/2 -translate-x-1/2 text-xs font-mono text-[#ebd6bf]/80 z-20">0</span>
+
+        <!-- SVG com os 3 Anéis Concêntricos -->
+        <svg class="w-full h-full -rotate-90" viewBox="0 0 500 500" aria-label="Três anéis concêntricos de progresso">
+          <!-- Anel Externo (Proj B - 40%) -->
+          <circle cx="250" cy="250" r="220" stroke="#2d1a17" stroke-width="18" fill="none" />
+          <circle id="ring-b" cx="250" cy="250" r="220" stroke="#d64a2b" stroke-width="18" fill="none"
+            stroke-linecap="round" stroke-dasharray="1382.30" stroke-dashoffset="829.38"
+            class="transition-all duration-500" />
+
+          <!-- Anel Médio (Proj A - 75%) -->
+          <circle cx="250" cy="250" r="184" stroke="#2d1a17" stroke-width="18" fill="none" />
+          <circle id="ring-a" cx="250" cy="250" r="184" stroke="#ebd6bf" stroke-width="18" fill="none"
+            stroke-linecap="round" stroke-dasharray="1156.11" stroke-dashoffset="289.03"
+            class="transition-all duration-500" />
+
+          <!-- Anel Interno (Proj C - 15%) -->
+          <circle cx="250" cy="250" r="148" stroke="#2d1a17" stroke-width="18" fill="none" />
+          <circle id="ring-c" cx="250" cy="250" r="148" stroke="#e07a5f" stroke-width="18" fill="none"
+            stroke-linecap="round" stroke-dasharray="929.91" stroke-dashoffset="790.42"
+            class="transition-all duration-500" />
+        </svg>
+
+        <!-- Rótulo Anel Externo (Proj B) -->
+        <div class="absolute left-0 sm:left-2 top-[52%] -translate-y-1/2 bg-[#0c0505]/90 border border-[#d64a2b]/40 px-2 py-1 rounded text-left text-xs sm:text-sm z-20">
+          <span id="pct-b" class="block font-mono text-[#d64a2b] font-bold">40%</span>
+          <span>Proj B (<span id="pct-b-inline">40%</span>)</span>
+        </div>
+
+        <!-- Rótulo Anel Médio (Proj A) -->
+        <div class="absolute right-2 sm:right-6 top-[52%] -translate-y-1/2 bg-[#0c0505]/90 border border-[#ebd6bf]/30 px-2 py-1 rounded text-right text-xs sm:text-sm z-20">
+          <span>Proj A (<span id="pct-a">75%</span>)</span>
+        </div>
+
+        <!-- Rótulo Anel Interno (Proj C) -->
+        <div class="absolute bottom-[16%] sm:bottom-[17%] left-1/2 -translate-x-1/2 bg-[#0c0505]/90 border border-[#e07a5f]/40 px-2.5 py-0.5 rounded text-center text-xs sm:text-sm whitespace-nowrap z-20">
+          <span>Proj C (<span id="pct-c">15%</span>)</span>
+        </div>
+
+        <!-- Div Circular Central com Foto e Nome do Usuário -->
+        <div class="user-center-circle absolute w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-[#170c0c] border-2 border-[#d64a2b] shadow-[0_0_24px_rgba(214,74,43,0.35)] flex flex-col items-center justify-center text-center p-3 z-20">
+          <label for="upload-foto" class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#0c0505] border border-[#ebd6bf]/40 overflow-hidden flex items-center justify-center cursor-pointer relative group hover:border-[#d64a2b] transition-colors" title="Clique para alterar a foto">
+            <img id="foto-usuario" src="" alt="Foto do Usuário" class="w-full h-full object-cover hidden" />
+            <svg id="avatar-padrao" class="w-9 h-9 sm:w-11 sm:h-11 text-[#ebd6bf]/85" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span class="absolute inset-0 bg-[#0c0505]/75 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-[10px] font-mono uppercase text-[#ebd6bf]">
+              Foto
+            </span>
+          </label>
+          <input id="upload-foto" type="file" accept="image/*" onchange="trocarFoto(event)" class="hidden" />
+
+          <button type="button" onclick="editarUsuario()" id="nome-usuario-centro" class="mt-2 text-xs sm:text-sm font-semibold text-[#ebd6bf] hover:text-[#d64a2b] transition-colors cursor-pointer line-clamp-1">
+            Nome do Usuário
+          </button>
+        </div>
+      </div>
+
+      <p id="feedback-bar" class="mt-4 text-xs font-mono text-[#ebd6bf]/70 min-h-[18px] text-center"></p>
+    </main>
+
+    <!-- Menu Lateral Flutuante (<aside>) à Direita: Bordas Laranjas Marcadas e Efeito de Luz -->
+    <aside class="floating-aside fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 bg-[#170c0c] border-2 border-[#d64a2b] rounded-2xl shadow-[0_0_22px_rgba(214,74,43,0.65)] overflow-hidden flex flex-col divide-y divide-[#d64a2b]/50">
+      <button type="button" onclick="novaTarefa()" class="w-24 sm:w-28 py-4 px-2 flex flex-col items-center justify-center gap-1.5 text-center text-[#ebd6bf] hover:bg-[#0c0505] hover:text-[#d64a2b] transition-colors cursor-pointer">
+        <svg class="w-6 h-6 text-[#d64a2b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 5v14m-7-7h14" />
+        </svg>
+        <span class="text-[11px] font-semibold leading-tight">nova tarefa</span>
+      </button>
+
+      <a href="projetos.html" class="w-24 sm:w-28 py-4 px-2 flex flex-col items-center justify-center gap-1.5 text-center text-[#ebd6bf] hover:bg-[#0c0505] hover:text-[#d64a2b] transition-colors">
+        <svg class="w-6 h-6 text-[#ebd6bf]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+        </svg>
+        <span class="text-[11px] font-semibold leading-tight">projetos</span>
+      </a>
+
+      <a href="tempos.html" class="w-24 sm:w-28 py-4 px-2 flex flex-col items-center justify-center gap-1.5 text-center text-[#ebd6bf] hover:bg-[#0c0505] hover:text-[#d64a2b] transition-colors">
+        <svg class="w-6 h-6 text-[#d64a2b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span class="text-[11px] font-semibold leading-tight">relatório de horas</span>
+      </a>
+    </aside>
+  </div>
+
+  <script>
+    const state = {
+      usuario: 'Nome do Usuário',
+      projA: 75,
+      projB: 40,
+      projC: 15
+    };
+
+    const comprimentos = {
+      b: 2 * Math.PI * 220,
+      a: 2 * Math.PI * 184,
+      c: 2 * Math.PI * 148
+    };
+
+    function renderAneis() {
+      document.getElementById('ring-b').style.strokeDashoffset = comprimentos.b * (1 - state.projB / 100);
+      document.getElementById('ring-a').style.strokeDashoffset = comprimentos.a * (1 - state.projA / 100);
+      document.getElementById('ring-c').style.strokeDashoffset = comprimentos.c * (1 - state.projC / 100);
+
+      document.getElementById('pct-a').textContent = `${state.projA}%`;
+      document.getElementById('pct-b').textContent = `${state.projB}%`;
+      document.getElementById('pct-b-inline').textContent = `${state.projB}%`;
+      document.getElementById('pct-c').textContent = `${state.projC}%`;
+    }
+
+    function novaTarefa() {
+      state.projB = Math.min(100, state.projB + 5);
+      renderAneis();
+      mostrarAviso('Nova tarefa adicionada no Solaris (+5% em Proj B).');
+    }
+
+    function editarUsuario() {
+      const novoNome = prompt('Nome do usuário:', state.usuario);
+      if (novoNome && novoNome.trim()) {
+        state.usuario = novoNome.trim();
+        document.getElementById('nome-usuario-centro').textContent = state.usuario;
+      }
+    }
+
+    function trocarFoto(event) {
+      const arquivo = event.target.files[0];
+      if (!arquivo) return;
+      const leitor = new FileReader();
+      leitor.onload = (e) => {
+        const img = document.getElementById('foto-usuario');
+        const avatar = document.getElementById('avatar-padrao');
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+        avatar.classList.add('hidden');
+      };
+      leitor.readAsDataURL(arquivo);
+    }
+
+    function mostrarAviso(msg) {
+      document.getElementById('feedback-bar').textContent = msg;
+    }
+
+    function alternarBusca() {
+      document.getElementById('barra-busca').classList.toggle('hidden');
+    }
+
+    function toggleSidebarMobile() {
+      const side = document.getElementById('sidebar-esq');
+      side.classList.toggle('hidden');
+      side.classList.toggle('flex');
+    }
+
+    renderAneis();
+  </script>
+</body>
+</html>
